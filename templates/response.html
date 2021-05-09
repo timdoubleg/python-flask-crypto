@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<meta charset="UTF-8">
+<title>Iris Species Classification</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<body>
+
+<div class="ui container", style="margin-top:50px">
+
+  <h1>Order Status</h1>
+    <div class="row justify-content-md-center">
+
+            {% if code == 200 %}
+
+                <p> Your order has been accepted</p>
+                <p> Pizza: {{ item }} </p>
+                <p> Quantity: {{ quantity }} </p>
+                <p> Amount: {{ amount }} </p>
+                <p> Your tracking ID is {{ instanceID }} </p>
+
+            {% endif %}
+
+             {% if code != 200 %}
+
+                <p>There has been a problem with your order.</p>
+
+                <p> {{ code }} </p>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
