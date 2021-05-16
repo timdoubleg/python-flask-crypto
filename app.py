@@ -10,7 +10,7 @@ def order():
     productList = Store()
     if request.method == 'POST':
         crypto_pair = request.form['pair']
-        quantity = int(request.form['quantity'])
+        threshold = int(request.form['threshold'])
 
         # Create a new resource
         response = requests.post(
@@ -18,7 +18,7 @@ def order():
             json={
                 "variables": {
                     "amount": {
-                        "value": quantity,
+                        "value": threshold,
                         "type": "long"
                     },
                     "item": {
@@ -35,7 +35,7 @@ def order():
         else:
             instanceID = "null"
 
-        return render_template('response.html', crypto_pair=crypto_pair, quantity=quantity, code=response.status_code, instanceID=instanceID, message=response.content)
+        return render_template('response.html', crypto_pair=crypto_pair, threshold=threshold, code=response.status_code, instanceID=instanceID, message=response.content)
     return render_template('order.html')
 
 

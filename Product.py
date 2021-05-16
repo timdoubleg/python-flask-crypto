@@ -7,7 +7,7 @@ class Product:
 
 class Store:
     def __init__(self):
-        self.store = {"diavolo": Product("diavolo", 19), "hawaii" : Product("hawaii", 18)}
+        self.store = {"btcusdt": Product("btcusdt", 19), "ethusdt" : Product("ethusdt", 18)}
 
     def getProductList(self):
         return self.store.values()
