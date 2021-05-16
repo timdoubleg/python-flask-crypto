@@ -13,7 +13,6 @@ def order():
         below_threshold = int(request.form['below_threshold'])
         pair = base_asset + quote_asset
 
-
         # Create a new resource
         response = requests.post(
             'https://siddhi7.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/Process_1bhe89a/start',

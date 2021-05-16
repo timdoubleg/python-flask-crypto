@@ -12,27 +12,30 @@
     <h1>Choosing your Crypo Pair and Threshold</h1>
 
     <form class="ui form" method="POST" action="/">
-
-        <div class="ui right labeled input" data-children-count="1" name="base_asset">
-            <input type="text" placeholder="Enter base asset..">
+        
+        <p>
+        <div class="ui right labeled input" data-children-count="1">
+            <input type="text" placeholder="Enter base asset.." name="base_asset">
             <div class="ui basic label">
                 e.g. btc
             </div>
         </div>
+        </p>
 
-        <div class="ui right labeled input" data-children-count="1" name="quote_asset">
-            <input type="text" placeholder="Enter quote asset..">
+        <p>
+        <div class="ui right labeled input" data-children-count="1" >
+            <input type="text" placeholder="Enter quote asset.." name="quote_asset">
             <div class="ui basic label">
                 e.g. usdt
             </div>
         </div>
+        </p>
 
         <div class="field">
             <label>Above Threshold</label>
             <input type="number" name="above_threshold" placeholder="Above which threshold?">
-        <button class="ui button" type="submit">Submit</button>
         </div>
-
+        <button class="ui button" type="submit">Submit</button>
 
         <div class="field">
             <label>Below Threshold</label>
