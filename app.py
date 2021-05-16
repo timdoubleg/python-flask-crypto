@@ -7,21 +7,29 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def order():
     if request.method == 'POST':
-        crypto_pair = request.form['pair']
-        threshold = int(request.form['threshold'])
+        base_asset = request.form['base_asset']
+        quote_asset = request.form['quote_asset']
+        above_threshold = int(request.form['above_threshold'])
+        below_threshold = int(request.form['below_threshold'])
+        pair = base_asset + quote_asset
+
 
         # Create a new resource
         response = requests.post(
             'https://siddhi7.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/Process_1bhe89a/start',
             json={
                 "variables": {
-                    "threshold": {
-                        "value": threshold,
+                    "pair": {
+                        "value": pair,
+                        "type": "string"
+                    },
+                    "above_threshold": {
+                        "value": above_threshold,
                         "type": "long"
                     },
-                    "crypto_pair": {
-                        "value": crypto_pair,
-                        "type": "string"
+                    "below_threshold": {
+                        "value": below_threshold,
+                        "type": "long"
                     }
                 }
             })
@@ -33,7 +41,7 @@ def order():
         else:
             instanceID = "null"
 
-        return render_template('response.html', crypto_pair=crypto_pair, threshold=threshold, code=response.status_code, instanceID=instanceID, message=response.content)
+        return render_template('response.html', pair=pair, above_threshold=above_threshold, below_threshold=below_threshold, code=response.status_code, instanceID=instanceID, message=response.content)
     return render_template('order.html')
 
 

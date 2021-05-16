@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <meta charset="UTF-8">
-<title>Choose your Crypto and Threshold</title>
+<title>Confirmed! You chose your Crypto Pair and Thresholds</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <body>
@@ -13,9 +13,10 @@
 
             {% if code == 200 %}
 
-                <p> Your crypto pairs and threshold have been accepted</p>
-                <p> Pair: {{ crypto_pair }} </p>
-                <p> Threshold: {{ threshold }} </p>
+                <p> Your crypto pairs and thresholds have been accepted</p>
+                <p> pair: {{ pair }} </p>
+                <p> Below Threshold: {{ below_threshold }} </p>
+                <p> Above Threshold: {{ above_threshold }} </p>
                 <p> Your tracking ID is {{ instanceID }} </p>
 
             {% endif %}

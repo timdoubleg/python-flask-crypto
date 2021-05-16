@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-<title>Iris Species Classification</title>
+<title>Choose your Crypto Pair and Thresholds</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
@@ -13,16 +13,26 @@
 
     <form class="ui form" method="POST" action="/">
 
-        <select class="ui dropdown" name="pair">
-            <option value="">Select Crypto Pair</option>
-            <option value="btcusdt">BTCUSDT</option>
-            <option value="ethusdt">ETHUSDT</option>
-        </select>
+        <div class="ui right labeled input" data-children-count="1" name="base_asset">
+            <input type="text" placeholder="Enter base asset..">
+            <div class="ui basic label">
+                e.g. btc
+            </div>
+        </div>
+
+        <div class="ui right labeled input" data-children-count="1" name="quote_asset">
+            <input type="text" placeholder="Enter quote asset..">
+            <div class="ui basic label">
+                e.g. usdt
+            </div>
+        </div>
 
         <div class="field">
-            <label>Threshold</label>
-            <input type="number" name="threshold" placeholder="Above which threshold?">
+            <label>Above Threshold</label>
+            <input type="number" name="above_threshold" placeholder="Above which threshold?">
         <button class="ui button" type="submit">Submit</button>
+        </div>
+
 
         <div class="field">
             <label>Below Threshold</label>
