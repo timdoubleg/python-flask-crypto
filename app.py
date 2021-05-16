@@ -9,11 +9,8 @@ app = Flask(__name__)
 def order():
     productList = Store()
     if request.method == 'POST':
-        item = request.form['pizza_name']
+        crypto_pair = request.form['pair']
         quantity = int(request.form['quantity'])
-        price = productList.getPrize(item)
-        amount = price * quantity
-        print(amount)
 
         # Create a new resource
         response = requests.post(
@@ -21,11 +18,11 @@ def order():
             json={
                 "variables": {
                     "amount": {
-                        "value": amount,
+                        "value": quantity,
                         "type": "long"
                     },
                     "item": {
-                        "value": item,
+                        "value": crypto_pair,
                         "type": "string"
                     }
                 }
@@ -38,7 +35,7 @@ def order():
         else:
             instanceID = "null"
 
-        return render_template('response.html', item=item, amount=amount, quantity=quantity,code=response.status_code, instanceID=instanceID,message=response.content)
+        return render_template('response.html', crypto_pair=crypto_pair, amount=amount, quantity=quantity, code=response.status_code, instanceID=instanceID, message=response.content)
     return render_template('order.html')
 
 
