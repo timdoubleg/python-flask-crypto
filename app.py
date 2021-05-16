@@ -35,7 +35,7 @@ def order():
         else:
             instanceID = "null"
 
-        return render_template('response.html', crypto_pair=crypto_pair, amount=amount, quantity=quantity, code=response.status_code, instanceID=instanceID, message=response.content)
+        return render_template('response.html', crypto_pair=crypto_pair, quantity=quantity, code=response.status_code, instanceID=instanceID, message=response.content)
     return render_template('order.html')
 
 
