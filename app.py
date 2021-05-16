@@ -1,20 +1,18 @@
 import requests
 from flask import Flask, render_template, request
-from Product import Store
 
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def order():
-    productList = Store()
     if request.method == 'POST':
         crypto_pair = request.form['pair']
         threshold = int(request.form['threshold'])
 
         # Create a new resource
         response = requests.post(
-            'https://siddhi7.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/PythonFlask/start',
+            'https://siddhi7.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/Process_1bhe89a/start',
             json={
                 "variables": {
                     "threshold": {
