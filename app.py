@@ -14,14 +14,14 @@ def order():
 
         # Create a new resource
         response = requests.post(
-            'https://intense-dusk-05888.herokuapp.com/engine-rest/process-definition/key/payment-retrieval/start',
+            'https://siddhi7.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/PythonFlask/start',
             json={
                 "variables": {
-                    "amount": {
+                    "threshold": {
                         "value": threshold,
                         "type": "long"
                     },
-                    "item": {
+                    "crypto_pair": {
                         "value": crypto_pair,
                         "type": "string"
                     }

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <meta charset="UTF-8">
-<title>Iris Species Classification</title>
+<title>Choose your Crypto and Threshold</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <body>
@@ -13,7 +13,7 @@
 
             {% if code == 200 %}
 
-                <p> Your order has been accepted</p>
+                <p> Your crypto pairs and threshold have been accepted</p>
                 <p> Pair: {{ crypto_pair }} </p>
                 <p> Threshold: {{ threshold }} </p>
                 <p> Your tracking ID is {{ instanceID }} </p>
@@ -22,7 +22,7 @@
 
              {% if code != 200 %}
 
-                <p>There has been a problem with your order.</p>
+                <p>There has been a problem with your input.</p>
 
                 <p> {{ code }} </p>
 
