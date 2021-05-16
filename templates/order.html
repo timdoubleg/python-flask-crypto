@@ -10,6 +10,13 @@
 
     <body>
     <h1>Choosing your Crypo Pair and Threshold</h1>
+    
+    <body>
+    <p><b>The base asset is the left part of a crypto pair while the quote asset is the denomination</b></p>
+    <p>Example for BTCUSDT:</p>
+    <p>Base Asset: <i>BTC</i></p>
+    <p>Quote Asset: <i>USDT</i>></p>
+    </body>
 
     <form class="ui form" method="POST" action="/">
         
@@ -31,17 +38,25 @@
         </div>
         </p>
 
+        <body>
+        <p>Based on your inputed threshold we will send you a mail notification if the chosen crypo pair goes above oder below the chosen thresholds</p>
+        </body>
+
+
         <div class="field">
             <label>Above Threshold</label>
             <input type="number" name="above_threshold" placeholder="Above which threshold?">
         </div>
-        <button class="ui button" type="submit">Submit</button>
 
         <div class="field">
             <label>Below Threshold</label>
             <input type="number" name="below_threshold" placeholder="Below which threshold?">
         </div>
+        
+        <p>
         <button class="ui button" type="submit">Submit</button>
+        </p>
+
     </form>
     </body>
 </div>
