@@ -11,8 +11,8 @@ def order():
         base_asset = base_asset.upper()
         quote_asset = request.form['quote_asset']
         quote_asset = quote_asset.upper()
-        above_threshold = int(request.form['above_threshold'])
-        below_threshold = int(request.form['below_threshold'])
+        above_threshold = float(request.form['above_threshold'])
+        below_threshold = float(request.form['below_threshold'])
         pair = base_asset + quote_asset
 
         # Create a new resource
