@@ -8,7 +8,9 @@ app = Flask(__name__)
 def order():
     if request.method == 'POST':
         base_asset = request.form['base_asset']
+        base_asset = base_asset.upper()
         quote_asset = request.form['quote_asset']
+        quote_asset = quote_asset.upper()
         above_threshold = int(request.form['above_threshold'])
         below_threshold = int(request.form['below_threshold'])
         pair = base_asset + quote_asset
