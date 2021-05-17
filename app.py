@@ -4,11 +4,25 @@ from flask.templating import render_template
 import pygal
 from pygal.style import Style
 import pandas as pd
+from binance.client import Client
+import numpy as np
+import time
+from datetime import datetime
 
 app = Flask(__name__)
 
+# setup
+API_KEY = 'AkVFEvk2s1cfM6UlSQI1I4fvBCqo7gaKBHDpQPc6GhrpT1ekrvCyxKImFEfsmk6K'
+SECRET_KEY = 'VhGNHC377clTSdyIqO0EgEbcslZOv5yXfIvFw4GrHIII9m8XFXDoUldnZr1JTyh6'
+client = Client(api_key=API_KEY, api_secret=SECRET_KEY)
 
-@app.route('/', methods=['GET', 'POST'])
+# define functions
+def get_avg_price(symbol):
+    avg_price = client.get_avg_price(symbol=symbol)
+    avg_price = (float(avg_price['price']))
+    return avg_price
+
+@app.route('/', methods=['GET', 'POST', self.pair])
 def order():
     if request.method == 'POST':
         base_asset = request.form['base_asset']
@@ -71,5 +85,35 @@ def bar_route():
     except Exception:
         return "error"
 
+@app.route('/graph')
+def home():
+
+    values = list([get_avg_price('BNBUSDT')])
+    labels = list([datetime.now().strftime("%H:%M:%S")])
+    n = 10
+
+    # iterate
+    for i in range(n):
+        labels.append(datetime.now().strftime("%H:%M:%S"))
+        values.append(get_avg_price('BNBUSDT'))
+        time.sleep(1)
+
+    return render_template("graph.html", labels=labels, values=values)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002)
+
+
+"""
+data = [
+    ("01-01-2020", 2),
+    ("02-01-2020", 3),
+    ("03-01-2020", 2),
+    ("04-01-2020", 6),
+    ("05-01-2020", 8)
+]
+labels = [row[0] for row in data]
+values = [row[1] for row in data]
+"""
+
+
