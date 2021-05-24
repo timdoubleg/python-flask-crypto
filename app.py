@@ -1,41 +1,41 @@
-import requests
-from flask import Flask, render_template, request
-from flask.templating import render_template
-import pygal
-from pygal.style import Style
-import pandas as pd
-from binance.client import Client
-import numpy as np
+import json
+import random
 import time
 from datetime import datetime
+import requests
+from flask.templating import render_template
+from flask import Flask, Response, render_template, request
+
 
 app = Flask(__name__)
 
-# setup
-API_KEY = 'AkVFEvk2s1cfM6UlSQI1I4fvBCqo7gaKBHDpQPc6GhrpT1ekrvCyxKImFEfsmk6K'
-SECRET_KEY = 'VhGNHC377clTSdyIqO0EgEbcslZOv5yXfIvFw4GrHIII9m8XFXDoUldnZr1JTyh6'
-client = Client(api_key=API_KEY, api_secret=SECRET_KEY)
-
 # define functions
-def get_avg_price(symbol):
-    avg_price = client.get_avg_price(symbol=symbol)
-    avg_price = (float(avg_price['price']))
-    return avg_price
+def get_current_price(symbol):
+    payload = {'symbol': symbol}
+    r = requests.get('https://api.binance.com/api/v3/ticker/price', params=payload)
+    results = r.json()
+    results = float(results['price'])
+    return results
 
-@app.route('/', methods=['GET', 'POST', self.pair])
+# this is the pair needed for all functions
+pair_list = []
+
+@app.route('/', methods=['GET', 'POST'])
 def order():
     if request.method == 'POST':
         base_asset = request.form['base_asset']
         base_asset = base_asset.upper()
         quote_asset = request.form['quote_asset']
         quote_asset = quote_asset.upper()
+        email = request.form['email']
         above_threshold = int(request.form['above_threshold'])
         below_threshold = int(request.form['below_threshold'])
         pair = base_asset + quote_asset
+        pair_list.append(pair)
 
         # Create a new resource
         response = requests.post(
-            'https://siddhi7.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/Process_1bhe89a/start',
+            'https://siddhi5.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/Trial1/start',
             json={
                 "variables": {
                     "pair": {
@@ -49,6 +49,10 @@ def order():
                     "below_threshold": {
                         "value": below_threshold,
                         "type": "long"
+                    }, 
+                    "email": {
+                        "value": email,
+                        "type": "string"
                     }
                 }
             })
@@ -60,60 +64,36 @@ def order():
         else:
             instanceID = "null"
 
-        return render_template('response.html', pair=pair, above_threshold=above_threshold, below_threshold=below_threshold, code=response.status_code, instanceID=instanceID, message=response.content)
+        return render_template('response.html', pair=pair, above_threshold=above_threshold, below_threshold=below_threshold, email=email, code=response.status_code, instanceID=instanceID, message=response.content)
     return render_template('order.html')
 
 
-@app.route('/bar_route')
-def bar_route():
-    try:
 
-        bar_chart = pygal.Bar()
-        bar_chart.title = 'Browser usage evolution (in %)'
-        bar_chart.x_labels = map(str, range(2002, 2013))
-        bar_chart.add('Firefox', [None, None, 0, 16.6,
-                      25,   31, 36.4, 45.5, 46.3, 42.8, 37.1])
-        bar_chart.add('Chrome',  [None, None, None, None,
-                      None, None,    0,  3.9, 10.8, 23.8, 35.3])
-        bar_chart.add('IE',      [85.8, 84.6, 84.7, 74.5,
-                      66, 58.6, 54.7, 44.8, 36.2, 26.6, 20.1])
-        bar_chart.add('Others',  [14.2, 15.4, 15.3,  8.9,
-                      9, 10.4,  8.9,  5.8,  6.7,  6.8,  7.5])
-        barchart_data = bar_chart.render_data_uri()
-        return render_template('barchart.html', barchart_data=barchart_data)
+@app.route('/chart')
+def vmd_timestamp():
+    return render_template('graph.html')
 
-    except Exception:
-        return "error"
 
-@app.route('/graph')
-def home():
+@app.route('/chart-data')
+def chart_data():
+    #pair = pair_list[-1]
+    #pair = 'BNBUSDT'
+    def generate_current_prices():
+        while True:
+            try: 
+                pair = pair_list[-1]
+                json_data = json.dumps(
+                    {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': get_current_price(pair)})
+                yield f"data:{json_data}\n\n"
+                time.sleep(1)
+            except: 
+                time.sleep(1)
 
-    values = list([get_avg_price('BNBUSDT')])
-    labels = list([datetime.now().strftime("%H:%M:%S")])
-    n = 10
 
-    # iterate
-    for i in range(n):
-        labels.append(datetime.now().strftime("%H:%M:%S"))
-        values.append(get_avg_price('BNBUSDT'))
-        time.sleep(1)
-
-    return render_template("graph.html", labels=labels, values=values)
+    return Response(generate_current_prices(), mimetype='text/event-stream')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002)
 
-
-"""
-data = [
-    ("01-01-2020", 2),
-    ("02-01-2020", 3),
-    ("03-01-2020", 2),
-    ("04-01-2020", 6),
-    ("05-01-2020", 8)
-]
-labels = [row[0] for row in data]
-values = [row[1] for row in data]
-"""
 
 
