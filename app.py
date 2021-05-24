@@ -21,7 +21,7 @@ def get_current_price(symbol):
 pair_list = []
 
 @app.route('/', methods=['GET', 'POST'])
-def order():
+def home():
     if request.method == 'POST':
         base_asset = request.form['base_asset']
         base_asset = base_asset.upper()
@@ -65,12 +65,12 @@ def order():
             instanceID = "null"
 
         return render_template('response.html', pair=pair, above_threshold=above_threshold, below_threshold=below_threshold, email=email, code=response.status_code, instanceID=instanceID, message=response.content)
-    return render_template('order.html')
+    return render_template('home.html')
 
 
 
 @app.route('/chart')
-def vmd_timestamp():
+def chart():
     return render_template('graph.html')
 
 
