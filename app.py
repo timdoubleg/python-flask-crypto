@@ -20,6 +20,7 @@ def get_current_price(symbol):
 # this is the pair needed for all functions
 pair_list = []
 
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -35,7 +36,7 @@ def home():
 
         # Create a new resource
         response = requests.post(
-            'https://siddhi5.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/Trial1/start',
+            'https://siddhi5.bpmcep.ics.unisg.ch/engine-rest/process-definition/key/python2siddhi/start',
             json={
                 "variables": {
                     "pair": {
