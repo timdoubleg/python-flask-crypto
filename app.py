@@ -77,8 +77,7 @@ def chart():
 
 @app.route('/chart-data')
 def chart_data():
-    #pair = pair_list[-1]
-    #pair = 'BNBUSDT'
+
     def generate_current_prices():
         while True:
             try: 
