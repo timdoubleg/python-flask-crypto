@@ -85,9 +85,9 @@ def chart_data():
                 utc_dt = datetime.datetime.now(tz=pytz.utc)
                 zurich_tz = pytz.timezone("Europe/Zurich")
                 local_time = zurich_tz.normalize(utc_dt)
-                time = local_time.strftime('%H:%M:%S')
+                current_time = local_time.strftime('%H:%M:%S')
                 json_data = json.dumps(
-                    {'time': time, 'value': get_current_price(pair)})
+                    {'time': current_time, 'value': get_current_price(pair)})
                 yield f"data:{json_data}\n\n"
                 time.sleep(1)
             except: 
