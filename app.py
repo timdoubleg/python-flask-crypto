@@ -1,10 +1,11 @@
 import json
 import random
 import time
-from datetime import datetime
+import datetime
 import requests
 from flask.templating import render_template
 from flask import Flask, Response, render_template, request
+import pytz
 
 
 app = Flask(__name__)
@@ -77,13 +78,16 @@ def chart():
 
 @app.route('/chart-data')
 def chart_data():
-
     def generate_current_prices():
         while True:
             try: 
                 pair = pair_list[-1]
+                utc_dt = datetime.datetime.now(tz=pytz.utc)
+                zurich_tz = pytz.timezone("Europe/Zurich")
+                local_time = zurich_tz.normalize(utc_dt)
+                time = local_time.strftime('%H:%M:%S')
                 json_data = json.dumps(
-                    {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': get_current_price(pair)})
+                    {'time': time, 'value': get_current_price(pair)})
                 yield f"data:{json_data}\n\n"
                 time.sleep(1)
             except: 
